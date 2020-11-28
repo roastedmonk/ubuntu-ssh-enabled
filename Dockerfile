@@ -15,10 +15,12 @@ RUN curl -sL https://deb.nodesource.com/setup_10.x -o nodesource_setup.sh
 RUN bash nodesource_setup.sh
 RUN apt-get install nodejs cron nano -y
 RUN systemctl enable cron
+RUN npm i -g crontab-ui
 
 RUN wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | apt-key add -
 RUN echo "deb https://packages.cloudfoundry.org/debian stable main" | tee /etc/apt/sources.list.d/cloudfoundry-cli.list
-RUN apt-get install cf-cli 
+RUN apt-get update
+RUN apt-get install cf-cli  -y
 
 EXPOSE 22 19000 19001 19002 19003 19004 19005 19006 19007 19008 19009 20000
 CMD ["/usr/sbin/sshd", "-D"]
