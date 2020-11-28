@@ -13,11 +13,12 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 
 RUN wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
 RUN echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
-RUN sudo apt-get install cf-cli nano -y
+RUN apt-get install cf-cli nano -y
 
 RUN curl -sL https://deb.nodesource.com/setup_10.x -o nodesource_setup.sh
-RUN sudo bash nodesource_setup.sh
-RUN sudo apt-get install nodejs -y
+RUN bash nodesource_setup.sh
+RUN apt-get install nodejs cron -y
+RUN sudo systemctl enable cron
 
 EXPOSE 22 19000 19001 19002 19003 19004 19005 19006 19007 19008 19009 20000
 CMD ["/usr/sbin/sshd", "-D"]
